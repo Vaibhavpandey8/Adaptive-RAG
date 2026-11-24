@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture — Adaptive RAG</title>
+  <link rel="stylesheet" href="/static/styles.css?v=4" />
+  <script src="/static/theme.js?v=4"></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header row-between">
+        <div>
+          <h1>Adaptive RAG</h1>
+          <p class="muted">Document Assistant</p>
+        </div>
+        <button type="button" class="ghost-btn" data-theme-toggle>Dark</button>
+      </div>
+
+      <nav class="side-nav">
+        <a href="/" class="nav-link">Chat</a>
+        <a href="/benchmark" class="nav-link">Benchmark</a>
+        <a href="/architecture" class="nav-link active">Architecture</a>
+      </nav>
+
+      <div class="sidebar-block" style="margin-top:auto;">
+        <p class="muted" style="line-height:1.5;">
+          Overview of the 2-Stage Router, Hybrid RRF Search, Relevance Reranker, and Corrective RAG retry loop.
+        </p>
+      </div>
+    </aside>
+
+    <main class="page-area">
+      <div class="page-inner">
+        <div class="page-head">
+          <div>
+            <h2>Architecture &amp; Routing Flow</h2>
+            <p class="muted">How incoming questions are contextualized, routed, retrieved, reranked, and verified.</p>
+          </div>
+        </div>
+
+        <section class="arch-section">
+          <h3>1. How Routes Are Decided (2-Stage Hybrid Router)</h3>
+          <div class="step-grid">
+            <div class="step-card">
+              <span class="step-label">Step 0 &middot; Memory</span>
+              <h4>Follow-up Rewriting</h4>
+              <p>If conversation history exists, pronouns and follow-ups (e.g. <em>"What about L5?"</em>) are rewritten into a standalone query before routing.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-label">Stage 1 &middot; &lt;2 ms, &#8377;0</span>
+              <h4>Heuristic + BM25 Probe</h4>
+              <p>Trivial greetings go straight to Route A with zero LLM calls. A fast Okapi BM25 probe checks keyword overlap against uploaded docs.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-label">Stage 2 &middot; LangChain LCEL</span>
+              <h4>Doc-Aware Classifier</h4>
+              <p>LangChain <code>ChatPromptTemplate | llm.with_structured_output(RouteDecision)</code> inspects the query, doc manifest, and BM25 hint to output validated <code>route</code>, <code>confidence</code>, and <code>reason</code>.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-label">Stage 3 &middot; Safety Net</span>
+              <h4>Asymmetric Fallback</h4>
+              <p>If <code>confidence &lt; 0.70</code> or the query references uploaded documents, it falls back to <strong>Route B</strong> so retrieval verifies or abstains instead of hallucinating.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="arch-section">
+          <h3>2. Three Execution Strategies</h3>
+          <div class="metric-grid">
+            <div class="metric-card">
+              <span class="route-tag route-A">Route A &middot; Direct LLM</span>
+              <h4 style="margin-top:10px;">0 Retrieval Steps</h4>
+              <p class="muted" style="margin-top:6px;">Used for general ML, coding, and concept questions unrelated to uploaded docs. Saves retrieval latency and tokens.</p>
+            </div>
+            <div class="metric-card">
+              <span class="route-tag route-B">Route B &middot; Single-Hop RAG</span>
+              <h4 style="margin-top:10px;">Hybrid RRF + Rerank + CRAG</h4>
+              <p class="muted" style="margin-top:6px;">Retrieves top candidates via BM25 + Gemini Embeddings (RRF), grades relevance (0-10), retries once with a rewritten query if weak, or safely abstains.</p>
+            </div>
+            <div class="metric-card">
+              <span class="route-tag route-C">Route C &middot; Multi-Hop RAG</span>
+              <h4 style="margin-top:10px;">Decomposition + Synthesis</h4>
+              <p class="muted" style="margin-top:6px;">Splits complex cross-document scenarios into 2-3 sub-queries, runs hybrid search per hop, deduplicates &amp; reranks chunks, and synthesizes cited answers.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="arch-section">
+          <h3>3. Key Engineering Details</h3>
+          <div class="two-col">
+            <div class="metric-card">
+              <h4>LangChain Hybrid Search (BM25 + RRF)</h4>
+              <p class="muted" style="margin-top:6px;">
+                Chunks documents with <code>RecursiveCharacterTextSplitter</code> and combines sparse <strong>BM25Okapi</strong>
+                with persisted LangChain <strong>InMemoryVectorStore</strong> (<code>GoogleGenerativeAIEmbeddings</code>):
+              </p>
+              <p style="margin-top:8px;"><code>RRF(d) = 1 / (60 + rank_bm25) + 1 / (60 + rank_dense)</code></p>
+            </div>
+            <div class="metric-card">
+              <h4>Scaling to Production (10k QPS)</h4>
+              <p class="muted" style="margin-top:6px;">
+                The doc-aware LLM router works zero-shot on any newly uploaded PDF. At high traffic, logged routing decisions + outcomes can be distilled into a local
+                <strong>DeBERTa / ModernBERT</strong> classifier (&lt;15 ms CPU, zero API cost), following Jeong et al. (NAACL 2024).
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptive RAG</title>
+  <link rel="stylesheet" href="/static/styles.css?v=5" />
+  <script src="/static/theme.js?v=5"></script>
+</head>
+<body>
+  <div class="layout">
+    <!-- Clean Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header row-between">
+        <div>
+          <h1>Adaptive RAG</h1>
+          <p class="muted">Document Assistant</p>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="ghost-btn" data-theme-toggle>Dark</button>
+          <button id="newChatBtn" class="ghost-btn" title="Start a new chat">+ New</button>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="/" class="nav-link active">Chat</a>
+        <a href="/benchmark" class="nav-link">Benchmark</a>
+        <a href="/architecture" class="nav-link">Architecture</a>
+      </nav>
+
+      <div class="sidebar-block">
+        <label class="label" for="routeMode">Mode</label>
+        <select id="routeMode" class="select">
+          <option value="auto" selected>Auto (Adaptive)</option>
+          <option value="A">Direct LLM (No RAG)</option>
+          <option value="B">Single-Hop RAG</option>
+          <option value="C">Multi-Hop RAG</option>
+        </select>
+
+        <label class="label" for="retrieverMode" style="margin-top:4px;">Retriever</label>
+        <select id="retrieverMode" class="select">
+          <option value="hybrid" selected>Hybrid (BM25 + Vector RRF)</option>
+          <option value="bm25">BM25 Only</option>
+          <option value="vector">Vector Only</option>
+        </select>
+      </div>
+
+      <div class="sidebar-block docs-block">
+        <span class="label">Documents</span>
+
+        <label class="upload-btn" for="fileInput">
+          <input type="file" id="fileInput" accept=".pdf,.txt,.md" hidden />
+          + Upload PDF / TXT / MD
+        </label>
+        <div id="uploadStatus" class="upload-status"></div>
+
+        <ul class="doc-list" id="docList"></ul>
+      </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="chat-area">
+      <div class="messages" id="chatMessages">
+        <div class="welcome" id="welcomeState">
+          <h2>Upload your documents and ask anything</h2>
+          <p>General questions are answered directly. Upload PDF, TXT, or MD files in the sidebar to enable grounded single-hop and multi-hop RAG.</p>
+          <div class="suggestions">
+            <button class="suggestion" data-q="What is the difference between precision and recall in machine learning?">
+              What is the difference between precision and recall in machine learning?
+            </button>
+            <button class="suggestion" data-q="Summarize the key points from my uploaded document.">
+              Summarize the key points from my uploaded document
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <form class="composer" id="chatForm">
+        <input
+          type="text"
+          id="queryInput"
+          placeholder="Ask a question..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="sendBtn">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="/static/app.js?v=5"></script>
+</body>
+</html>

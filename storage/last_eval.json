@@ -1,0 +1,248 @@
+{
+  "has_results": true,
+  "timestamp": "2026-11-24 22:57:24",
+  "retriever_mode": "hybrid",
+  "num_questions": 9,
+  "elapsed_sec": 36.6,
+  "summary": [
+    {
+      "method": "No-RAG (Always A)",
+      "avg_accuracy": 50.0,
+      "avg_latency_ms": 1455.1,
+      "avg_retrieval_steps": 0.0,
+      "route_accuracy": null
+    },
+    {
+      "method": "Naive RAG (Always B)",
+      "avg_accuracy": 62.0,
+      "avg_latency_ms": 3048.3,
+      "avg_retrieval_steps": 1.33,
+      "route_accuracy": null
+    },
+    {
+      "method": "Adaptive RAG (Ours)",
+      "avg_accuracy": 94.4,
+      "avg_latency_ms": 4782.4,
+      "avg_retrieval_steps": 1.11,
+      "route_accuracy": 88.9
+    }
+  ],
+  "per_question": [
+    {
+      "id": "Q1",
+      "query": "What is the difference between precision and recall in machine learning?",
+      "gold_route": "A",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 100.0,
+          "latency_ms": 1206.9,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 0.0,
+          "latency_ms": 2054.3,
+          "steps": 2
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 100.0,
+          "latency_ms": 2651.5,
+          "steps": 0
+        }
+      },
+      "predicted_route": "A",
+      "route_correct": true
+    },
+    {
+      "id": "Q2",
+      "query": "Explain cosine similarity in one short paragraph.",
+      "gold_route": "A",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 75.0,
+          "latency_ms": 1358.6,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 0.0,
+          "latency_ms": 2444.4,
+          "steps": 2
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 75.0,
+          "latency_ms": 2801.8,
+          "steps": 0
+        }
+      },
+      "predicted_route": "A",
+      "route_correct": true
+    },
+    {
+      "id": "Q3",
+      "query": "Hi, what can you help me with?",
+      "gold_route": "A",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 100.0,
+          "latency_ms": 1501.1,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 33.3,
+          "latency_ms": 1883.2,
+          "steps": 2
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 100.0,
+          "latency_ms": 2787.3,
+          "steps": 0
+        }
+      },
+      "predicted_route": "A",
+      "route_correct": true
+    },
+    {
+      "id": "Q4",
+      "query": "What is the annual learning and certification reimbursement budget for an L4 AI Engineer?",
+      "gold_route": "B",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 50.0,
+          "latency_ms": 1356.0,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 100.0,
+          "latency_ms": 3631.4,
+          "steps": 1
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 100.0,
+          "latency_ms": 4387.5,
+          "steps": 1
+        }
+      },
+      "predicted_route": "B",
+      "route_correct": true
+    },
+    {
+      "id": "Q5",
+      "query": "What is NovaTech's SEV-1 incident acknowledgement SLA and post-mortem deadline?",
+      "gold_route": "B",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 50.0,
+          "latency_ms": 1357.6,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 100.0,
+          "latency_ms": 3406.5,
+          "steps": 1
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 100.0,
+          "latency_ms": 6185.6,
+          "steps": 2
+        }
+      },
+      "predicted_route": "C",
+      "route_correct": false
+    },
+    {
+      "id": "Q6",
+      "query": "Within how many calendar days must travel expenses be submitted on FinDesk?",
+      "gold_route": "B",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 50.0,
+          "latency_ms": 1511.2,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 100.0,
+          "latency_ms": 3969.3,
+          "steps": 1
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 100.0,
+          "latency_ms": 4850.1,
+          "steps": 1
+        }
+      },
+      "predicted_route": "B",
+      "route_correct": true
+    },
+    {
+      "id": "Q7",
+      "query": "If a newly joined L4 AI Engineer buys a 30,000 INR monitor in week 6 and attends an AI conference costing 45,000 INR, who must approve the expenses and what happens if they resign after 8 months?",
+      "gold_route": "C",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 25.0,
+          "latency_ms": 1368.4,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 50.0,
+          "latency_ms": 3462.3,
+          "steps": 1
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 75.0,
+          "latency_ms": 6076.7,
+          "steps": 2
+        }
+      },
+      "predicted_route": "C",
+      "route_correct": true
+    },
+    {
+      "id": "Q8",
+      "query": "Compare the notice period during probation vs after probation confirmation for an L4 engineer, and also state when they become eligible for Work-From-Anywhere weeks.",
+      "gold_route": "C",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 0.0,
+          "latency_ms": 1354.8,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 75.0,
+          "latency_ms": 3282.2,
+          "steps": 1
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 100.0,
+          "latency_ms": 6663.5,
+          "steps": 2
+        }
+      },
+      "predicted_route": "C",
+      "route_correct": true
+    },
+    {
+      "id": "Q9",
+      "query": "What code review approvals are required for a core ML inference pipeline PR, and what RAG evaluation metrics must pass before production launch?",
+      "gold_route": "C",
+      "scores": {
+        "No-RAG (Always A)": {
+          "accuracy": 0.0,
+          "latency_ms": 2081.0,
+          "steps": 0
+        },
+        "Naive RAG (Always B)": {
+          "accuracy": 100.0,
+          "latency_ms": 3300.9,
+          "steps": 1
+        },
+        "Adaptive RAG (Ours)": {
+          "accuracy": 100.0,
+          "latency_ms": 6637.4,
+          "steps": 2
+        }
+      },
+      "predicted_route": "C",
+      "route_correct": true
+    }
+  ]
+}

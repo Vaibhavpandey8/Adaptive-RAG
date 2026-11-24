@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benchmark — Adaptive RAG</title>
+  <link rel="stylesheet" href="/static/styles.css?v=4" />
+  <script src="/static/theme.js?v=4"></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header row-between">
+        <div>
+          <h1>Adaptive RAG</h1>
+          <p class="muted">Document Assistant</p>
+        </div>
+        <button type="button" class="ghost-btn" data-theme-toggle>Dark</button>
+      </div>
+
+      <nav class="side-nav">
+        <a href="/" class="nav-link">Chat</a>
+        <a href="/benchmark" class="nav-link active">Benchmark</a>
+        <a href="/architecture" class="nav-link">Architecture</a>
+      </nav>
+
+      <div class="sidebar-block" style="margin-top:auto;">
+        <p class="muted" style="line-height:1.5;">
+          Compares <strong>No-RAG</strong>, <strong>Naive Single-Hop RAG</strong>, and <strong>Adaptive RAG</strong> across accuracy, latency, and retrieval steps.
+        </p>
+      </div>
+    </aside>
+
+    <main class="page-area">
+      <div class="page-inner">
+        <div class="page-head">
+          <div>
+            <h2>Benchmark Evaluation</h2>
+            <p class="muted">Quantitative comparison across accuracy, latency, retrieval steps, and routing.</p>
+          </div>
+          <div class="page-actions">
+            <select id="evalRetrieverMode" class="select compact">
+              <option value="hybrid" selected>Hybrid (BM25 + Vector)</option>
+              <option value="bm25">BM25 Only</option>
+              <option value="vector">Vector Only</option>
+            </select>
+            <button id="runEvalBtn" class="dark-btn">Run Live Benchmark</button>
+          </div>
+        </div>
+
+        <div id="evalLoading" class="notice hidden">
+          Running 27 evaluations (3 methods &times; 9 questions)... takes ~30 seconds.
+        </div>
+
+        <div id="evalResults">
+          <div class="empty-card">
+            <p class="muted">Loading benchmark results...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/benchmark.js?v=4"></script>
+</body>
+</html>
