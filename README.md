@@ -129,7 +129,3 @@ python run.py
 Open **http://127.0.0.1:8000** in your browser.
 
 ---
-
-## Reference
-
-Inspired by *"Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language Models through Question Complexity"* — Jeong et al., NAACL 2024 (arXiv:2403.14403).
