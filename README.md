@@ -4,7 +4,7 @@ An end-to-end **Adaptive Retrieval-Augmented Generation (Adaptive-RAG)** web app
 
 Instead of blindly running vector search on every query like Naive RAG, the system classifies query complexity using a **2-Stage Hybrid Router** and dynamically dispatches requests to **Direct LLM (Route A)**, **Single-Hop Corrective RAG (Route B)**, or **Multi-Hop Query Decomposition (Route C)**.
 
-> **Live Demo:** _Coming soon (Render deployment link will be attached here)_
+> **Live Demo:** https://adaptive-rag-8f17.onrender.com *(Free Render tier may take ~20–30s on first cold wake-up)*
 
 ---
 
